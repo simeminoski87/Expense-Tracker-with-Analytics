@@ -47,7 +47,7 @@ class CategoryServiceImplTest {
         user = new User();
         user.setUsername("testuser");
 
-        category = new Category("Food", Type.EXPENSE);
+        category = new Category("Food");
     }
 
     // ---------------- FIND ALL ----------------
@@ -97,10 +97,10 @@ class CategoryServiceImplTest {
         when(userRepository.findUserByUsername("testuser")).thenReturn(Optional.of(user));
 
         // Prepare the category to save
-        Category newCategory = new Category("Food", Type.EXPENSE);
+        Category newCategory = new Category("Food");
 
         // When saving, return the category with the user attached
-        Category savedCategory = new Category("Food", Type.EXPENSE);
+        Category savedCategory = new Category("Food");
         savedCategory.setUser(user);
         when(categoryRepository.save(any(Category.class))).thenReturn(savedCategory);
 
@@ -110,7 +110,6 @@ class CategoryServiceImplTest {
         // Assertions
         assertTrue(result.isPresent(), "Category should be created successfully");
         assertEquals("Food", result.get().getName());
-        assertEquals(Type.EXPENSE, result.get().getType());
         assertEquals(user, result.get().getUser());
 
         verify(categoryRepository).save(any(Category.class));
@@ -122,18 +121,17 @@ class CategoryServiceImplTest {
     @Test
     @Order(5)
     void testUpdate_Success() {
-        Category existing = new Category("Old", Type.EXPENSE);
+        Category existing = new Category("Old");
 
         when(categoryRepository.findById(1L)).thenReturn(Optional.of(existing));
         when(categoryRepository.save(any(Category.class))).thenReturn(existing);
 
-        Category updatedData = new Category("New", Type.INCOME);
+        Category updatedData = new Category("New");
 
         Optional<Category> result = categoryService.update(1L, updatedData);
 
         assertTrue(result.isPresent());
         assertEquals("New", result.get().getName());
-        assertEquals(Type.INCOME, result.get().getType());
     }
 
     @Test

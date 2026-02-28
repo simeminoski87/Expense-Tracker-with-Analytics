@@ -10,14 +10,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String name;
-    Type type;
     @ManyToOne
     User user;
 
 
-    public Category(String name, Type type) {
+    public Category(String name) {
         this.name = name;
-        this.type = type;
     }
 
     public Category() {

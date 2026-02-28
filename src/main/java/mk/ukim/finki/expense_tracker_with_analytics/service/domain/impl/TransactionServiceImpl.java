@@ -63,10 +63,9 @@ public class TransactionServiceImpl implements TransactionService {
                     transaction.getType(),
                     transaction.getDescription(),
                     transaction.getCategory(),
-                    user,
                     LocalDateTime.now()
             )));
-
+            transaction.setUser(user);
         }
         return savedTransaction;
     }
@@ -74,5 +73,10 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void deleteById(Long id) {
         transactionRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Transaction> findById(Long id) {
+        return transactionRepository.findById(id);
     }
 }

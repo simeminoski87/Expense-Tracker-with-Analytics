@@ -41,7 +41,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .getName();
         User user=userRepository.findUserByUsername(username).orElseThrow(UserNotFoundException::new);
         Optional<Category> savedCategory=Optional.empty();
-        if(category.getType()!=null && !categoryRepository.existsByName(category.getName())
+        if(categoryRepository.existsByName(category.getName())
                 && !category.getName().isEmpty()){
             category.setUser(user);
             savedCategory = Optional.of(categoryRepository.save(category));
@@ -52,11 +52,8 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Optional<Category> update(Long id, Category category) {
         return categoryRepository.findById(id).map(existingCategory->{
-            if(category.getName()!=null && !categoryRepository.existsByName(category.getName())){
+            if(category.getName()!=null && categoryRepository.existsByName(category.getName())){
                 existingCategory.setName(category.getName());
-            }
-            if(category.getType()!=null){
-                existingCategory.setType(category.getType());
             }
             return categoryRepository.save(existingCategory);
         });

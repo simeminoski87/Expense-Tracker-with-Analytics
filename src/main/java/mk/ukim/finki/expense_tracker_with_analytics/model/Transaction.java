@@ -16,19 +16,17 @@ public class Transaction {
     BigDecimal amount;
     Type type;
     String description;
-
     @ManyToOne
     Category category;
     @ManyToOne
     User user;
     LocalDateTime createdAt;
 
-    public Transaction(BigDecimal amount, Type type, String description, Category category, User user, LocalDateTime createdAt) {
+    public Transaction(BigDecimal amount, Type type, String description, Category category, LocalDateTime createdAt) {
         this.amount = amount;
         this.type = type;
         this.description = description;
         this.category = category;
-        this.user = user;
         this.createdAt = createdAt;
     }
 
